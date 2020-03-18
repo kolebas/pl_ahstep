@@ -1,0 +1,9 @@
+.pl_widget {
+	transition: 1s;
+}
+
+.pl_widget:hover {
+    transform: translate(-5px, 0px) scale(1.05) ;
+    transition: 1s;
+    opacity: 0.8;
+}

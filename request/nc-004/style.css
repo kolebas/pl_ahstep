@@ -1,0 +1,45 @@
+	.table_cm {
+	width: 900px;
+	margin: 0 auto;
+	border: 1px solid rgba(0, 0, 0, 0.125);
+	margin-top: 50px;
+	padding-bottom: 15px;
+	border-radius: 0.3em;
+	}
+	.td_head {
+	padding-left: 30px;
+	padding-right: 30px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+	background-color: rgba(0, 0, 0, 0.03);
+	}
+	.td {
+	padding-left: 50px;
+	padding-right: 50px;
+	}
+	.ui-tile-selector-selector-wrap {
+	width: 800px;
+	}
+	.breadcrumb {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    list-style: none;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+	}
+	ol, ul, dl {
+    margin-top: 0;
+    margin-bottom: 1rem;
+	}
+	.breadcrumb-item + .breadcrumb-item::before {
+    display: inline-block;
+    padding-right: 0.5rem;
+    color: #6c757d;
+    content: "/";
+	}
+	.breadcrumb-item + .breadcrumb-item {
+    padding-left: 0.5rem;
+    }

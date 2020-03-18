@@ -1,0 +1,128 @@
+.sidebar-widget-top-title {
+		border-radius: 5px 5px 0 0;
+	}
+	.sidebar-widget-top {
+		border-radius: 5px 5px 0 0;
+	}
+	.sidebar-widget {
+		border-radius: 5px;
+	}
+	.sidebar-widget-title-only {
+		border-radius: 5px;
+	}
+	.sidebar-widget-top-only {
+		border-radius: 5px;
+	}
+	.feed-add-post-destination-block {
+		display: none;
+	}
+	.main-buttons-inner-container {
+		border-radius: 5px;
+	}
+
+	/*#microblog-form{
+		display: none;
+	}*/
+
+	.feed-add-grat-label{
+		background: none;
+	 	margin-right: 20px;
+	}
+
+	.owl-theme{
+		padding-left: 17px;
+		position: relative;
+		max-width: 280px!important;
+		height: 200px!important;
+		float: right;
+	}
+
+	.owl-carousel .owl-item img{
+		height: 220px!important;
+		width: 220px!important;
+		border-radius: 250px;
+		border: 1px solid #eef2f4;
+		height: auto;
+		width: 100%;
+		object-fit: contain;
+		margin: auto;
+		margin-top: 10px;
+		background-color: #eef2f4;
+	}
+
+	.uname{
+		margin-top: 20px;
+		text-align: center;
+	}
+
+	.uname a{
+		color: #0cbaee;
+		font-weight: 900;
+	}
+
+	.owl-carousel .owl-item .oimg img{
+		width: 50px!important;
+		height: 50px!important;
+		border-radius: 50px;
+		border: 1px solid #eef2f4;
+		background-color: #eef2f4; 
+		float: left;
+		margin-right: 10px;
+		margin-left: 10px;
+	}
+
+	.oname{
+		margin-top: 20px;
+	}
+
+	.oname a{
+		font-size: 14px;
+		color: #000;
+	}
+
+	.owl-nav{
+		margin-top: -200px!important;
+		position: relative;
+		z-index: 100;
+		display: none;
+	}
+
+	.owl-prev{
+		float: left;
+		z-index: 20;
+		color: white!important;
+		opacity: .3;
+		background: rgba(0, 0, 0, 0.7)!important;
+		width: 30px;
+		height: 50px;
+		border-radius: 0 5px 5px 0!important;
+		font-size: 30px!important;
+	}
+
+	.owl-next{
+		float: right;
+		z-index: 20;
+		color: white!important;
+		opacity: .3;
+		background: rgba(0, 0, 0, 0.7)!important;
+		width: 30px;
+		height: 50px;
+		border-radius: 5px 0 0 5px!important;
+		font-size: 30px!important;
+	}
+
+	.owl-carousel:hover .owl-nav{
+		display: block;
+	}
+
+	.typeLile{
+		margin-top: -50px;
+		margin-right: 50px;
+		float: right;
+		position: relative;
+		z-index: 101;
+	}
+	form {
+		
+		border-radius: 5px;
+	}
