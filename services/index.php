@@ -1,10 +1,10 @@
 <?
-require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetTitle("Заявки");
+#require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+#$APPLICATION->SetTitle("Заявки");
 
-use Bitrix\Main\UI\Extension;
+#use Bitrix\Main\UI\Extension;
 
-Extension::load('ui.bootstrap4');
+#Extension::load('ui.bootstrap4');
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
