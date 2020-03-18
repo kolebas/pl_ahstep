@@ -2,10 +2,11 @@
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Заявки");
 use Bitrix\Main\UI\Extension;
-#Extension::load('ui.bootstrap4');
+Extension::load('ui.bootstrap4');
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<link href="style.css" rel="stylesheet">
 
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
@@ -14,7 +15,7 @@ use Bitrix\Main\UI\Extension;
 	</ol>
 </nav>
 
-<link href="style-index.css" rel="stylesheet">
+
 
 <?
 $class_active = 'class="list-group-item list-group-item-action active" href="/it-uslugi/index.php#" align="center"';
@@ -44,11 +45,10 @@ $adm001 = '	<td>
 	</td>';
 ?>
 <br>
-<div class="list-group test2">
+<!--<div class="list-group test2" style="display: block;">
 	<table>
 		<tbody>
 			<tr>
-
 				<a class="list-group-item list-group-item-action" data-toggle="collapse" href="#nsi" role="button" aria-expanded="false" aria-controls="collapseExample ">
 					<h6 class="mb-1"><img src="img/list.png">&nbsp;&nbsp;Нормативно-справочная информация</h6>
 				</a>
@@ -107,19 +107,17 @@ $adm001 = '	<td>
 			</tr>
 		</tbody>
 	</table>
-</div>
-<br>
-<div id="items" class="list-group pl_container">
+</div>-->
+<div id="items" class="pl_container">
 	<div v-for="category in categories">
-		<a :href="'#' + category.link" role="button" data-toggle="collapse" class="list-group-item list-group-item-action pl_button"><img :src=category.img> <span class="pl_text">{{ category.name }}</span></a>
-	</div>
-	<div class="collapse">
-		<div class="card card-body">
-			<a href="uslugi/nc-002.php?clear_cache=Y" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/09a/36_30_1/folder_add.png">&nbsp; &nbsp;Создание нового каталога (папки)</a>
-			<a href="../ahstep/request/nc-003/" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/c8a/36_30_1/folder_rep.png">&nbsp; &nbsp;Доступ к каталогу (папке)</a>
-			<a href="../ahstep/request/nc-004/" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/09a/36_30_1/folder_add.png">&nbsp; &nbsp;Создание/изменение сетевого каталога (внешние сотрудники)</a>
+		<a :href="'#' + category.type" role="button" data-toggle="collapse" :class="categoty_class"><img :src=category.img> <span class="pl_text">{{ category.name }} </span></a>
+		<div class="collapse" :id="category.type">
+			<div class="card card-body">
+				<a href="uslugi/nsi-001.php" :class="item_class"><img src="img/lists.png">&nbsp; &nbsp;Редактирование справочника номенклатуры</a>
+			</div>
 		</div>
 	</div>
+
 </div>
 
 <script>
@@ -135,38 +133,44 @@ $adm001 = '	<td>
 	var app = new Vue({
 		el: '#items',
 		data: {
+			categoty_class: 'list-group-item list-group-item-action pl_button',
+			item_class: 'ist-group-item list-group-item-action',
 			message: 'Собираем карточки, Vue!',
 			categories: [{
 					name: 'Нормативно-справочная информация',
 					img: 'img/list.png',
-					link: 'nsi'
+					type: 'nsi'
 				},
 				{
 					name: 'Заявки пользователя',
 					img: 'img/user.png',
-					link: 'user'
+					type: 'user'
 				},
 				{
 					name: 'Заявки 1С',
-					img: '/upload/resize_cache/iblock/b3f/36_30_1/1s_kartinki_1_19082824.png',
-					link: '_1с'
+					img: 'img/1s.png',
+					type: '_1с'
 				},
 				{
 					name: 'Заявки на закупку',
-					img: '/upload/resize_cache/iblock/a10/36_30_1/soft.png',
-					link: 'collapseExample'
+					img: 'img/soft.png',
+					type: 'buy_req'
 				},
 				{
 					name: 'Заявки на каталог (папку)',
-					img: '/upload/resize_cache/iblock/6f7/36_30_1/folders.png',
-					link: 'fldr'
+					img: 'img/folder_add.png',
+					type: 'fldr'
 				},
 				{
 					name: 'Почта',
-					img: '/upload/resize_cache/iblock/d62/36_30_1/mails.png',
-					link: 'mail'
+					img: 'img/mails.png',
+					type: 'mail'
 				}
-			]
+			],
+			items: [{
+				name: 'Редактирование справочника номенклатуры',
+				link: ''
+			}]
 		}
 	})
 </script>

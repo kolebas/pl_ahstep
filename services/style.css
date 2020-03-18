@@ -1,4 +1,4 @@
-.btn {
+/*.btn {
     min-width: 530px;
     background-color: #009846;
 }
@@ -11,7 +11,7 @@
     -moz-transition: all .3s linear;
     background-color: rgba(30, 152, 78, 0.5)
 }
-
+/*
 .test {
     background-color: transparent;
     margin: auto;
@@ -46,12 +46,13 @@ td {
 table {
     margin: auto;
 }
-
+*/
 .pl_container {
     width: 55%;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
     margin-left: auto;
-	margin-right: auto;
+    margin-right: auto;
+    border-radius: 5px;
 }
 
 .pl_button {
@@ -61,7 +62,7 @@ table {
 .pl_button:hover {
     transform: scale(1.05);
     background: #ecf0f1;
-    transition: 1s;
+    transition: 0.5s;
 }
 
 .pl_text {
@@ -71,4 +72,8 @@ table {
     color: #2c3e50;
     text-align: center;
     margin: 1rem;
+}
+.pl_icon {
+    width: 30px;
+    height: 30px;
 }
