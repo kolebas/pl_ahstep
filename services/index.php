@@ -14,106 +14,21 @@ Extension::load('ui.bootstrap4');
 		<li class="breadcrumb-item active" aria-current="page">Заявки</li>
 	</ol>
 </nav>
-
-
-
-<?
-$class_active = 'class="list-group-item list-group-item-action active" href="/it-uslugi/index.php#" align="center"';
-$class_dd = 'class="list-group-item list-group-item-action dropdown-toggle"';
-$ts001 = '<a class="list-group-item list-group-item-action" href="uslugi/ts-001.php?clear_cache=Y"><img src="/upload/resize_cache/iblock/ff3/36_30_1/term.png">&nbsp; &nbsp;Заявка на терминал</a>';
-$nc002 = '<a class="list-group-item list-group-item-action" href="uslugi/nc-002.php?clear_cache=Y"><img src="/upload/resize_cache/iblock/09a/36_30_1/folder_add.png">&nbsp; &nbsp;Создание нового каталога (папки)</a>';
-$nc003 = '<a class="list-group-item list-group-item-action" href="./ahstep/request/nc-003/><img src="/upload/resize_cache/iblock/c8a/36_30_1/folder_rep.png">&nbsp; &nbsp;Доступ к каталогу (папке)</a>';
-$ml001 = '<a class="list-group-item list-group-item-action" href="uslugi/ml-001.php?clear_cache=Y"><img src="/upload/resize_cache/iblock/d62/36_30_1/mails.png">&nbsp; &nbsp;Создание/Изменение адреса почтовой рассылки</a>';
-$nu001_ = '<a class="list-group-item list-group-item-action" href="uslugi/nu-001.php"><img src="/upload/resize_cache/iblock/f1d/36_30_1/user_add.png">&nbsp; &nbsp;Новый пользователь</a>';
-$nu001 = '<button class="list-group-item list-group-item-action" type="button" data-toggle="modal" data-target="#nu-001"><img src="/upload/resize_cache/iblock/f1d/36_30_1/user_add.png">&nbsp; &nbsp;Новый пользователь</button>';
-$ph001 = '<a class="list-group-item list-group-item-action" href="uslugi/ph-001.php?clear_cache=Y&#10;"><img src="/upload/resize_cache/iblock/2bb/36_30_1/sim_add.png">&nbsp; &nbsp;Служебная сотовая связь</a>';
-$ns001 = '<a class="list-group-item list-group-item-action" href="uslugi/ns-001.php?clear_cache=Y"><img src="/upload/resize_cache/iblock/fd1/36_30_1/vpn.png">&nbsp; &nbsp;Удаленный доступ (VPN)</a>';
-$ar001 = '<a class="list-group-item list-group-item-action" href="uslugi/ar-001.php?clear_cache=Y"><img src="/upload/resize_cache/iblock/1e5/36_30_1/user_del.png">&nbsp; &nbsp;Отключение доступов</a>';
-$_1c001 = '<a class="list-group-item list-group-item-action" href="uslugi/1c-001.php?clear_cache=Y"><img src="/upload/resize_cache/iblock/b3f/36_30_1/1s_kartinki_1_19082824.png">&nbsp; &nbsp;Предоставление доступа к 1С </a>';
-$_1c002 = '<a class="list-group-item list-group-item-action" href="uslugi/1c-002.php?clear_cache=Y"><img src="/upload/resize_cache/iblock/b3f/36_30_1/1s_kartinki_1_19082824.png">&nbsp; &nbsp;Запрос на доработку 1С </a>';
-$ws001 = '<a class="list-group-item list-group-item-action" href="uslugi/nu-001.php"><img src="/upload/resize_cache/iblock/8d0/36_30_1/computer_add.png">&nbsp; &nbsp;Закупка техники/программного обеспечения  </a>';
-$sf001 = '<a class="list-group-item list-group-item-action" href="uslugi/ph-001.php?clear_cache=Y&#10;"><img src="/upload/resize_cache/iblock/a10/36_30_1/soft.png">&nbsp; &nbsp;Заявка на программное обеспечение </a>';
-$nsi001_ = '<a class="list-group-item list-group-item-action" href="uslugi/nsi-001.php"><img src="img/lists.png">&nbsp; &nbsp;Редактирование справочника номенклатура  </a>';
-$nsi001 = '<button class="list-group-item list-group-item-action" type="button" data-toggle="modal" data-target="#nsi-001"><img src="img/lists.png">&nbsp; &nbsp;Редактирование справочника номенклатура </button> ';
-$adm001 = '	<td>
-	&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-	</td>
-	<td width="400" valign="top"><a class="list-group-item list-group-item-action active" href="/it-uslugi/index.php#" align="center" >Администрирование</a>
-	<a class="list-group-item list-group-item-action dropdown-toggle" href="it-uslugi/uslugi/soglasovanie-izmeneniy.php?clear_cache=Y"><img src="/upload/resize_cache/iblock/a42/36_30_1/rfc.png">&nbsp; &nbsp;RFC</a>
-	<a class="list-group-item list-group-item-action dropdown-toggle" href="/bizproc/processes/87/view/0/?list_section_id="><img src="/upload/resize_cache/iblock/6f7/36_30_1/folders.png">&nbsp; &nbsp;Список СФК</a>
-	<a class="list-group-item list-group-item-action dropdown-toggle" href="/bizproc/processes/67/view/0/?list_section_id="><img src="/upload/resize_cache/iblock/680/36_30_1/org.png">&nbsp; &nbsp;Список организаций</a>
-	</td>';
-?>
 <br>
-<!--<div class="list-group test2" style="display: block;">
-	<table>
-		<tbody>
-			<tr>
-				<a class="list-group-item list-group-item-action" data-toggle="collapse" href="#nsi" role="button" aria-expanded="false" aria-controls="collapseExample ">
-					<h6 class="mb-1"><img src="img/list.png">&nbsp;&nbsp;Нормативно-справочная информация</h6>
-				</a>
-				<div class="collapse" id="nsi">
-					<div class="card card-body">
-						<a href="uslugi/nsi-001.php" class="list-group-item list-group-item-action"><img src="img/lists.png">&nbsp; &nbsp;Редактирование справочника номенклатуры</a>
-					</div>
-				</div>
-				<a class="list-group-item list-group-item-action" data-toggle="collapse" href="#user" role="button" aria-expanded="false" aria-controls="collapseExample ">
-					<h6 class="mb-1"><img src="img/user.png">&nbsp; &nbsp;Заявки пользователя</h6>
-				</a>
-				<div class="collapse" id="user">
-					<div class="card card-body">
-						<a href="uslugi/nu-001.php" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/f1d/36_30_1/user_add.png">&nbsp; &nbsp;Новый пользователь</a>
-						<a href="uslugi/ns-001.php?clear_cache=Y" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/fd1/36_30_1/vpn.png">&nbsp; &nbsp;Удаленный доступ (VPN)</a>
-						<a href="uslugi/ph-001.php?clear_cache=Y" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/2bb/36_30_1/sim_add.png">&nbsp; &nbsp;Служебная сотовая связь</a>
-						<a href="uslugi/ar-001.php?clear_cache=Y" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/1e5/36_30_1/user_del.png">&nbsp; &nbsp;Отключение доступов</a>
-					</div>
-				</div>
-				<a class="list-group-item list-group-item-action" data-toggle="collapse" href="#_1с" role="button" aria-expanded="false" aria-controls="collapseExample ">
-					<h6 class="mb-1"><img src="/upload/resize_cache/iblock/b3f/36_30_1/1s_kartinki_1_19082824.png">&nbsp; &nbsp;Заявки 1С</h6>
-				</a>
-				<div class="collapse" id="_1с">
-					<div class="card card-body">
-						<a href="uslugi/1c-001.php?clear_cache=Y" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/b3f/36_30_1/1s_kartinki_1_19082824.png">&nbsp; &nbsp;Предоставление доступа 1С</a>
-						<a href="uslugi/1c-002.php?clear_cache=Y" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/b3f/36_30_1/1s_kartinki_1_19082824.png">&nbsp; &nbsp;Запрос на доработку 1С</a>
-					</div>
-				</div>
-				<a class="list-group-item list-group-item-action" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample ">
-					<h6 class="mb-1"><img src="/upload/resize_cache/iblock/a10/36_30_1/soft.png">&nbsp; &nbsp;Заявки на закупку</h6>
-				</a>
-				<div class="collapse" id="collapseExample">
-					<div class="card card-body">
-						<a href="uslugi/ws-001.php" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/8d0/36_30_1/computer_add.png">&nbsp; &nbsp;Закупка техниики/оборудования обеспечения</a>
-						<a href="uslugi/sf-001.php" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/a10/36_30_1/soft.png">&nbsp; &nbsp;Заявки на программное обеспечение</a>
-					</div>
-				</div>
-				<a class="list-group-item list-group-item-action" data-toggle="collapse" href="#fldr" role="button" aria-expanded="false" aria-controls="collapseExample ">
-					<h6 class="mb-1"><img src="/upload/resize_cache/iblock/6f7/36_30_1/folders.png">&nbsp; &nbsp;Заявки на каталог (папку)</h6>
-				</a>
-				<div class="collapse" id="fldr">
-					<div class="card card-body">
-						<a href="uslugi/nc-002.php?clear_cache=Y" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/09a/36_30_1/folder_add.png">&nbsp; &nbsp;Создание нового каталога (папки)</a>
-						<a href="../ahstep/request/nc-003/" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/c8a/36_30_1/folder_rep.png">&nbsp; &nbsp;Доступ к каталогу (папке)</a>
-						<a href="../ahstep/request/nc-004/" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/09a/36_30_1/folder_add.png">&nbsp; &nbsp;Создание/изменение сетевого каталога (внешние сотрудники)</a>
-					</div>
-				</div>
-				<a class="list-group-item list-group-item-action" data-toggle="collapse" href="#mail" role="button" aria-expanded="false" aria-controls="collapseExample ">
-					<h6 class="mb-1"><img src="/upload/resize_cache/iblock/d62/36_30_1/mails.png">&nbsp; &nbsp;Почта&nbsp; &nbsp;</h6>
-				</a>
-				<div class="collapse" id="mail">
-					<div class="card card-body">
-						<a href="uslugi/ml-001.php?clear_cache=Y" class="list-group-item list-group-item-action"><img src="/upload/resize_cache/iblock/d62/36_30_1/mails.png">&nbsp; &nbsp;Создание/Изменение адреса почтовой рассылки</a>
-					</div>
-				</div>
-			</tr>
-		</tbody>
-	</table>
-</div>-->
 <div id="items" class="pl_container">
+	<div class="pl_title">
+		<h2 style="text-align: center;">Заявки на доступ к ИТ услугам</h2>
+		<p style="line-height: 1.5;">
+			 {{ message }} <button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button>
+		</p>
+	</div>
 	<div v-for="category in categories">
 		<a :href="'#' + category.type" role="button" data-toggle="collapse" :class="categoty_class"><img :src=category.img> <span class="pl_text">{{ category.name }} </span></a>
 		<div class="collapse" :id="category.type">
 			<div class="card card-body">
-				<a href="uslugi/nsi-001.php" :class="item_class"><img src="img/lists.png">&nbsp; &nbsp;Редактирование справочника номенклатуры</a>
+				<card-item-list 
+				v-for="item in items" :item="item">
+				</card-item-list>
 			</div>
 		</div>
 	</div>
@@ -127,15 +42,16 @@ $adm001 = '	<td>
 	})
 	Vue.component('card-item-list', {
 		props: ['item'],
-		template: '<a :href="item.lnk" class="list-group-item list-group-item-action mt-2">{{ item.name }}</a>'
+		template: '<a :href="item.lnk" class="pl_categories list-group-item-action mt-2"><img :src="item.img"><span style="margin-left: 1rem;">{{ item.name }}</span></a>'
 	})
 
 	var app = new Vue({
 		el: '#items',
 		data: {
-			categoty_class: 'list-group-item list-group-item-action pl_button',
-			item_class: 'ist-group-item list-group-item-action',
-			message: 'Собираем карточки, Vue!',
+			categoty_class: 'pl_categories list-group-item-action pl_button',
+			item_class: 'pl_categories list-group-item-action',
+			message: 'Для получения доступа к сервису или услуге, выберите нужный раздел, а затем услугу, после заполнения необходимых полей формы заявка будет отправлена на согласование отвественных сотрудникам. Статус заявки вы можете отслеживать в разделе',
+			path_service: '../../it-uslugi/uslugi/',
 			categories: [{
 					name: 'Нормативно-справочная информация',
 					img: 'img/list.png',
@@ -169,8 +85,83 @@ $adm001 = '	<td>
 			],
 			items: [{
 				name: 'Редактирование справочника номенклатуры',
-				link: ''
-			}]
+				img: 'img/lists.png',
+				type: 'nsi',
+				lnk:  '../../it-uslugi/uslugi/nsi-001.php'
+			},
+			{
+				name: 'Новый пользователь',
+				img: 'img/user_add.png',
+				type: 'user',
+				lnk: '../../it-uslugi/uslugi/nu-001.php'
+			},
+			{
+				name: 'Удаленный доступ (VPN)',
+				img: 'img/vpn.png',
+				type: 'user',
+				lnk: '../../it-uslugi/uslugi/ns-001.php'
+			},
+			{
+				name: 'Служебная сотовая связь',
+				img: 'img/sim_add.png',
+				type: 'user',
+				lnk: '../../it-uslugi/uslugi/ph-001.php'
+			},
+			{
+				name: 'Отключение доступов',
+				img: 'img/user_del.png',
+				type: 'user',
+				lnk: '../../it-uslugi/uslugi/ar-001.php'
+			},
+			{
+				name: 'Предоставление доступа к 1С',
+				img: 'img/1s.png',
+				type: '_1с',
+				lnk: '../../it-uslugi/uslugi/1c-001.php'
+			},
+			{
+				name: 'Запрос на доработку 1С',
+				img: 'img/1s.png',
+				type: '_1с',
+				lnk: '../../it-uslugi/uslugi/1c-002.php'
+			},
+			{
+				name: 'Закупка техники/оборудования/программного обеспечения',
+				img: 'img/computer_add.png',
+				type: 'buy_req',
+				lnk: '../../it-uslugi/uslugi/ws-001.php'
+			},
+			{
+				name: 'Заявки на установку прораммного обеспечения',
+				img: 'img/soft.png',
+				type: 'buy_req',
+				lnk: '../../it-uslugi/uslugi/sf-001.php'
+			},
+			{
+				name: 'Создание нового каталога (папки)',
+				img: 'img/folder_add.png',
+				type: 'fldr',
+				lnk: '../../it-uslugi/uslugi/nc-002.php'
+			},
+			{
+				name: 'Доступ к каталогу (папке)',
+				img: 'img/folder_rep.png',
+				type: 'fldr',
+				lnk: '../request/nc-003'
+			},
+			{
+				name: 'Создание.изменение сетевого каталога (внешние сотрудники)', 
+				img: 'img/folder_add.png',
+				type: 'fldr',
+				lnk: '../request/nc-004'
+			},
+			{
+				name: 'Создание/изменение адреса почтовой рассылки',
+				img: 'img/mails.png',
+				type: 'mail',
+				lnk: '../../it-uslugi/uslugi/ml-001.php'
+			},
+		]
 		}
 	})
 </script>
