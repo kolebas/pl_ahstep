@@ -1,9 +1,7 @@
 <?
-#require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-#$APPLICATION->SetTitle("Заявки");
-
-#use Bitrix\Main\UI\Extension;
-
+require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
+$APPLICATION->SetTitle("Заявки");
+use Bitrix\Main\UI\Extension;
 #Extension::load('ui.bootstrap4');
 ?>
 
