@@ -1,4 +1,5 @@
 <?
+echo "test";
 $path = $APPLICATION->GetCurUri();
 	$etalon = "/stream/";
 	$etalon2 = "/about/spasibo.php";
