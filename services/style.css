@@ -47,6 +47,7 @@ table {
     margin: auto;
 }
 */
+
 .pl_container {
     width: 55%;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
@@ -56,11 +57,11 @@ table {
 }
 
 .pl_title {
-	padding-left: 30px;
-	padding-right: 30px;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-	background-color: rgba(0, 0, 0, 0.03);
-    }
+    padding-left: 30px;
+    padding-right: 30px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    background-color: rgba(0, 0, 0, 0.03);
+}
 
 h2 {
     display: block;
@@ -71,18 +72,19 @@ h2 {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     font-weight: bold;
-    }
+}
 
 .pl_button {
     transition: 1s;
 }
+
 .pl_categories {
     position: relative;
     display: block;
     padding: 0.75rem 1.25rem;
     margin-bottom: -1px;
     background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.125);    
+    border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .pl_button:hover {
@@ -99,6 +101,7 @@ h2 {
     text-align: center;
     margin: 1rem;
 }
+
 .pl_icon {
     width: 30px;
     height: 30px;
