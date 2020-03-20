@@ -24,14 +24,11 @@ Extension::load('ui.bootstrap4');
 			{{ message }} <button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button>
 		</p>
 	</div>
-	<div v-for="(category, key) in categories">
-		<!--<category	v-for="(category, key) in categories" :category="category">
-		</category>-->
-		<a :href="'#' + category.type" role="button" data-toggle="collapse" :class="categoty_class"><img :src=category.img> <span class="pl_text">{{ category.name }} </span></a>
+	<div v-on:click="type = category.type" v-for="(category, key) in categories">
+		<a :href="'#' + category.type" role="button" data-toggle="collapse" :class="categoty_class"><img :src=category.img> <span class="pl_text">{{ category.name }}</span></a>
 		<div class="collapse" :id="category.type">
 			<div class="card card-body">
-				<card-item-list v-for="item in filteredItems" :item="item" :cat_type="category.type">
-				</card-item-list>
+				<card-item-list v-for="item in filteredItems" :item="item" :cat_type="category.type"></card-item-list>
 			</div>
 		</div>
 	</div>
@@ -58,6 +55,7 @@ Extension::load('ui.bootstrap4');
 			item_class: 'pl_categories list-group-item-action',
 			message: 'Для получения доступа к сервису или услуге, выберите нужный раздел, а затем услугу, после заполнения необходимых полей формы заявка будет отправлена на согласование отвественных сотрудникам. Статус заявки вы можете отслеживать в разделе',
 			path_service: '../../it-uslugi/uslugi/',
+			type: '',
 
 			categories: [{
 					name: 'Нормативно-справочная информация',
@@ -172,9 +170,8 @@ Extension::load('ui.bootstrap4');
 		},
 		computed:{
             filteredItems: function(){
-				let type = 'nsi';
                 return this.items.filter(item => {
-            		return item.type.includes(type);
+            		return item.type.includes(this.type);
                 });
             }
 		}
