@@ -24,11 +24,11 @@ Extension::load('ui.bootstrap4');
 			{{ message }} <button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button>
 		</p>
 	</div>
-	<div v-on:click="type = category.type" v-for="(category, key) in categories">
+	<div v-for="(category, key) in categories">
 		<a :href="'#' + category.type" role="button" data-toggle="collapse" :class="categoty_class"><img :src=category.img> <span class="pl_text">{{ category.name }}</span></a>
 		<div class="collapse" :id="category.type">
-			<div class="card card-body">
-				<card-item-list v-for="item in filteredItems" :item="item" :cat_type="category.type"></card-item-list>
+			<div v-bind="type = category.type" class="card card-body">
+				<card-item-list v-for="item in filteredItems" :item="item" ></card-item-list>
 			</div>
 		</div>
 	</div>
@@ -43,7 +43,7 @@ Extension::load('ui.bootstrap4');
 		<card-item-list v-for="item in items" :item="item">	</card-item-list>`
 	})
 	Vue.component('card-item-list', {
-		props: ['item' , 'cat_type'],
+		props: ['item'],
 		template: '<a :href="item.lnk" class="pl_categories list-group-item-action mt-2"><img :src="item.img"><span style="margin-left: 1rem;">{{ item.name }}</span></a>'
 	})
 
