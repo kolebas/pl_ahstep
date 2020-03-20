@@ -24,11 +24,11 @@
 	margin-top: 2px;
 	margin-left: 0px!important;
 	}
-	.toggle{
+	.pl_toggle{
 		position: relative;
 		display: inline;
 	}
-	.switch {
+	.pl_switch {
 		position: absolute;
 		top: 50%;
 		left: 50%;
