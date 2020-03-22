@@ -155,7 +155,7 @@
 					<br>
 					<label class="ui-ctl ui-ctl-radio">
 						<div class="ui-ctl-label-text"><b>Установить заместителя:</b></div>
-							<div id="toggle_zam" class="toggle">
+							<div id="toggle_zam" class="pl_toggle">
 								<input type="checkbox" style="margin-left: 88px;">
 								<label id="on_u" for="" class="label on invis">ДА</label>
 								<label id="off_u" for="" class="label off">НЕТ</label>
@@ -185,7 +185,7 @@
 					<br>
 					<label class="ui-ctl ui-ctl-radio">
 						<div class="ui-ctl-label-text"><b>Установить ответ для сообщений электроннй почты:</b></div>
-							<div id="toggle_email" class="toggle">
+							<div id="toggle_email" class="pl_toggle">
 								<input type="checkbox">
 								<label id="on_e" for="" class="label on invis">ДА</label>
 								<label id="off_e" for="" class="label off">НЕТ</label>
