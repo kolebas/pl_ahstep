@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+    <div id="items">
+    <v-app>
+        <template>
+            <v-card
+            class="mx-auto"
+            width="750px"
+              >
+            <v-container fluid>
+                <v-row
+                  align="center"
+                >
+                  <v-col cols="12">
+                    <v-autocomplete
+                      :items="info"
+                      outlined
+                      dense
+                      chips
+                      small-chips
+                      label="ФИО"
+                      item-text="LAST_NAME"
+                      item-value="ID"
+                      multiple
+                    > 
+                </v-autocomplete>
+                  </v-col>
+                  </v-row>
+            </v-container>
+            </v-card>
+           <!-- <v-card
+              class="mx-auto"
+              max-width="344"
+              outlined
+              v-for="item in info"
+            >
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <div class="overline mb-4">{{ item.WORK_COMPANY }}</div>
+                  <v-list-item-title class="headline mb-1">{{ item.LAST_NAME }} {{ item.NAME }}</v-list-item-title>
+                  <v-list-item-subtitle>{{ item.WORK_POSITION }}</v-list-item-subtitle>
+                </v-list-item-content>
+          
+                <v-list-item-avatar
+                  tile
+                  size="80"
+                  color="grey"
+                >
+                <v-img :src="item.PERSONAL_PHOTO"></v-img>
+                </v-list-item-avatar>
+              </v-list-item>
+            </v-card>-->
+          </template>
+   </v-app>
+   {{ info }}
+   </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+   
+  <script>
+      var app = new Vue({
+          el: '#items',
+          vuetify: new Vuetify(),
+          data: {
+              categoty_class: 'pl_categories list-group-item-action pl_button',
+              item_class: 'pl_categories list-group-item-action',
+              message: 'Для получения доступа к сервису или услуге, выберите нужный раздел, а затем услугу, после заполнения необходимых полей формы заявка будет отправлена на согласование отвественных сотрудникам. Статус заявки вы можете отслеживать в разделе',
+              path_service: '../../it-uslugi/uslugi/',
+              info: '',
+              i: ''
+
+          },
+
+          mounted() {
+    axios
+      .get('https://portal.ahstep.ru/rest/1/s7i3kl0o2ydbm29h/user.get.json',
+        {
+            params: {
+            ACTIVE: "Y",
+            start: this.i
+        }
+        })
+      .then(response => (this.info = response.data.result));
+  }
+});
+  </script>
+</body>
+</html>
