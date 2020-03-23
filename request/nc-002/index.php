@@ -3,16 +3,14 @@
 	$title = 'Заявка на создание сетевого каталога';
 	$APPLICATION->SetTitle($title);
 	\Bitrix\Main\UI\Extension::load("ui.forms");
-	\Bitrix\Main\UI\Extension::load("ui.buttons");
-	\Bitrix\Main\UI\Extension::load("ui.notification");
-	\Bitrix\Main\UI\Extension::load("ui.alerts");
 ?>
+
 <?
-	$dbRes = CIBlockSection::GetList(array('SORT' => 'ASC'), array('IBLOCK_EXTERNAL_ID' => 'departments', 'DEPTH_LEVEL' => ['2', '3'], '!NAME' => ['Вне структуры','8. ЭЛЕВАТОРЫ', '3.ТОРГОВЛЯ и СЕРВИС', '4. Ростовский кластер', '5. Краснодарский кластер', '6. Ставропольский кластер']));
-?>
-
-
-
+$arFilter = Array(
+	"IBLOCK_ID"=>"67"
+	);
+   $res = CIBlockElement::GetList(Array("NAME"=>"ASC"), $arFilter, Array("NAME"));
+?> 
 
 <link href="style.css" rel="stylesheet">
 <script src="script.js"></script>
@@ -34,9 +32,9 @@
 					<br>
 					<h2 style="text-align: center;"><?echo $title;?></h2>
 					<p style="line-height: 1.5;">
-					Данная услуга позволяет создать сетевой каталог (сетевую папку).
-Название каталога складывается из аббревиатуры организации, далее название департамента, затем название папки. Пример: «AHS-Бухгалтерия-Оперативный учет», где «AHS» – аббревиатура АО Агрохолдинг "СТЕПЬ", «Бухгалтерия» – наименование департамента, «Оперативный учет» - название папки.
-Также вы сможете отслеживать статус заявки в разделе <button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button><br>
+						Данная услуга позволяет создать сетевой каталог (сетевую папку).
+						Название каталога складывается из аббревиатуры организации, далее название департамента, затем название папки. Пример: «AHS-Бухгалтерия-Оперативный учет», где «AHS» – аббревиатура АО Агрохолдинг "СТЕПЬ", «Бухгалтерия» – наименование департамента, «Оперативный учет» - название папки.
+						Также вы сможете отслеживать статус заявки в разделе <button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button><br>
 						<b>После исполнения заявки пользователям которым предоставляется доступ необходимо перезагрузить свой компьютер.</b>
 					</p>
 				</td>
@@ -53,33 +51,18 @@
 						<select id="fld_name" class="ui-ctl-element" required>
 							<option></option>
 							<?
-							//$dbRes = CIBlockSection::GetList(array(), array('IBLOCK_EXTERNAL_ID' => 'departments', 'DEPTH_LEVEL' => ['2','3'], '!NAME' => ['Вне структуры','8. ЭЛЕВАТОРЫ']));
-							//$arSect = $dbRes->Fetch();
-							while ($arSect = $dbRes->Fetch())
+								while($ar_fields = $res->GetNext())
 									{
-										$el = $arSect[NAME];
-										if ($el == '1. Управляющая компания'){
-											$el = substr($el, 2, 150);
-										}
-										elseif ($el == '2. Торговый Дом Агрохолдинг "СТЕПЬ"'){
-											$el = substr($el, 2, 150);
-										}
-										elseif ($el == '9. ООО "Торговый дом "БСХП"'){
-											$el = substr($el, 2, 150);
-										}
-										elseif ($el == '7. Агрокомбинат Южный'){
-											$el = substr($el, 2, 150);
-										}
-										echo '<option>' . $el . '</option>';
+										 echo '<option>' . $ar_fields["NAME"] . '</option>';
 									}
 							?>
 						</select>
 					</div>
 					<br>
-					<div class="ui-ctl-label-text">
+					<div class="ui-ctl-label-text" for="fld_name">
 						<b>Название департамента:</b>
 					</div>
-					<div id="div_fld_name" class="ui-ctl ui-ctl-after-icon ui-ctl-w100 ui-ctl-textbox">
+					<div id="div_fld_name" :class="input_class">
 						<div class="ui-ctl-after">
 						</div>
 						<input id="fld_name" class="ui-ctl-element" placeholder="Например: Отдел кадров" required>
@@ -88,7 +71,7 @@
 					<div class="ui-ctl-label-text">
 						<b>Название каталога:</b>
 					</div>
-					<div class="ui-ctl ui-ctl-after-icon ui-ctl-w100 ui-ctl-textbox ">
+					<div :class="input_class">
 						<div class="ui-ctl-after">
 						</div>
 						<input id="fld_name" class="ui-ctl-element" placeholder="Например: График отпусков" required>
@@ -97,10 +80,10 @@
 					<div class="ui-ctl-label-text">
 						<b>Итоговое название каталога:</b>
 					</div>
-					<div class="ui-ctl ui-ctl-after-icon ui-ctl-w100 ui-ctl-textbox ">
+					<div class="ui-ctl ui-ctl-textbox ui-ctl-w100 ui-ctl-disabled">
 						<div class="ui-ctl-after">
 						</div>
-						<input id="fld_name" class="ui-ctl-element" required>
+						<input id="fld_name" class="ui-ctl-element" disabled>
 					</div>
 					<br>
 					<div class="ui-ctl-label-text">
@@ -114,7 +97,7 @@
 							[
 							"ID" => "bp_user",
 							"API_VERSION" => 3,
-							"INPUT_NAME" => "rm_user[]",
+							"INPUT_NAME" => "bp_user",
 							"LIST" => array_keys($crmQueueSelected),
 							"USE_SYMBOLIC_ID" => true,
 							"SELECTOR_OPTIONS" => 
@@ -205,5 +188,6 @@
 	</table>
 </form>
 <div id="results"> </div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>													

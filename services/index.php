@@ -21,7 +21,7 @@ Extension::load('ui.bootstrap4');
 	<div class="pl_title">
 		<h2 style="text-align: center;">{{ title }}</h2>
 		<p style="line-height: 1.5;">
-			{{ message }} <button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button>
+			{{ message }} <a href="../../../it-uslugi/helpdesk/my_ticket.php"><button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button></a>
 		</p>
 	</div>
 	<div v-for="(category, key) in categories">
