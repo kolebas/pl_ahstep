@@ -13,7 +13,7 @@ $arFilter = Array(
 ?> 
 
 <link href="style.css" rel="stylesheet">
-<script src="script.js"></script>
+<script src="main.js"></script>
 
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
@@ -48,7 +48,7 @@ $arFilter = Array(
 					<div class="ui-ctl ui-ctl-after-icon ui-ctl-w100 ui-ctl-dropdown">
 						<div class="ui-ctl-after ui-ctl-icon-angle">
 						</div>
-						<select id="fld_name" class="ui-ctl-element" required>
+						<select id="org" class="ui-ctl-element" required>
 							<option></option>
 							<?
 								while($ar_fields = $res->GetNext())
@@ -59,13 +59,13 @@ $arFilter = Array(
 						</select>
 					</div>
 					<br>
-					<div class="ui-ctl-label-text" for="fld_name">
+					<div class="ui-ctl-label-text" for="dep">
 						<b>Название департамента:</b>
 					</div>
-					<div id="div_fld_name" :class="input_class">
+					<div id="div_dep" :class="input_class">
 						<div class="ui-ctl-after">
 						</div>
-						<input id="fld_name" class="ui-ctl-element" placeholder="Например: Отдел кадров" required>
+						<input id="dep" class="ui-ctl-element" placeholder="Например: Отдел кадров" required>
 					</div>
 					<br>
 					<div class="ui-ctl-label-text">
@@ -83,7 +83,7 @@ $arFilter = Array(
 					<div class="ui-ctl ui-ctl-textbox ui-ctl-w100 ui-ctl-disabled">
 						<div class="ui-ctl-after">
 						</div>
-						<input id="fld_name" class="ui-ctl-element" disabled>
+						<input id="fld_name_complete" class="ui-ctl-element" disabled>
 					</div>
 					<br>
 					<div class="ui-ctl-label-text">
@@ -123,7 +123,7 @@ $arFilter = Array(
 							'bitrix:main.user.selector',
 							' ',
 							[
-							"ID" => "ro_user",
+							"ID" => "rw_user",
 							"API_VERSION" => 3,
 							"INPUT_NAME" => "rw_user[]",
 							"LIST" => array_keys($crmQueueSelected),
@@ -151,7 +151,7 @@ $arFilter = Array(
 							'bitrix:main.user.selector',
 							' ',
 							[
-							"ID" => "rw_user",
+							"ID" => "ro_user",
 							"API_VERSION" => 3,
 							"INPUT_NAME" => "ro_user[]",
 							"LIST" => array_keys($crmQueueSelected),
