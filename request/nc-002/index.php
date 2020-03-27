@@ -9,7 +9,8 @@
 $arFilter = Array(
 	"IBLOCK_ID"=>"67"
 	);
-   $res = CIBlockElement::GetList(Array("NAME"=>"ASC"), $arFilter, Array("NAME"));
+   $res = CIBlockElement::GetList(Array("NAME"=>"ASC"), $arFilter);
+
 ?> 
 
 <link href="style.css" rel="stylesheet">
@@ -53,7 +54,7 @@ $arFilter = Array(
 							<?
 								while($ar_fields = $res->GetNext())
 									{
-										 echo '<option>' . $ar_fields["NAME"] . '</option>';
+										 echo '<option value="' . substr($ar_fields["SEARCHABLE_CONTENT"], -3, 100) . '">' . $ar_fields["NAME"] . '</option>';
 									}
 							?>
 						</select>
@@ -74,7 +75,7 @@ $arFilter = Array(
 					<div :class="input_class">
 						<div class="ui-ctl-after">
 						</div>
-						<input id="fld_name" class="ui-ctl-element" placeholder="Например: График отпусков" required>
+						<input id="cat" class="ui-ctl-element" placeholder="Например: График отпусков" required>
 					</div>
 					<br>
 					<div class="ui-ctl-label-text">

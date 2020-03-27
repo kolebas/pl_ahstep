@@ -20,11 +20,12 @@ $(document).ready(function() {
         btn_ticket = doc.getElementById('btn_ticket');
 
     var sbmt = function() {
-        var s_fld_name = doc.getElementById('fld_name').value,
+        var cat = doc.getElementById('cat').value,
             org = doc.getElementById('org').value,
             dep = doc.getElementById('dep').value,
             bp_usr = doc.getElementById('bp_user').value.replace("U", "user_"),
-            s_cmnt = doc.getElementById('cmnt').value;
+            s_cmnt = doc.getElementById('cmnt').value,
+            fld_name_complete = doc.getElementById('fld_name_complete').value;
 
         var ifs = doc.getElementsByName("rw_user[]"),
             ar_ifs = ifs.length;
@@ -58,7 +59,7 @@ $(document).ready(function() {
             data: {
                 org: org,
                 dep: dep,
-                fld_name: s_fld_name,
+                fld_name: fld_name_complete,
                 traditional: true,
                 bp_usr: bp_usr,
                 rw_usr_all: rw_usr_all,
@@ -71,6 +72,21 @@ $(document).ready(function() {
         }).fail(function() {
             alert("Ошибка!");
         });
+    }
+
+    var org_func = function() {
+        org_v = org.value;
+        fld_name_complete.value = org_v + '-';
+    }
+
+    var dep_func = function() {
+        dep_v = dep.value;
+        fld_name_complete.value = org_v + '-' + dep_v + '-';
+    }
+
+    var cat_func = function() {
+        cat_v = cat.value;
+        fld_name_complete.value = org_v + '-' + dep_v + '-' + cat_v;
     }
 
     var check = function() {
@@ -88,7 +104,9 @@ $(document).ready(function() {
         console.log('Нажата');
     }
 
-    //fm.addEventListener('submit', sbmt, false);
+    org.addEventListener('change', org_func, false);
+    dep.addEventListener('change', dep_func, false);
+    cat.addEventListener('change', cat_func, false);
     btn.addEventListener('click', check, false);
     btn_ticket.addEventListener('click', my_ticket, false);
 
