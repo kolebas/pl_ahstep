@@ -1,46 +1,114 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
+
 <body>
     <div id="items">
-    <v-app>
-        <template>
+        <v-app>
+            <template>
             <v-card
             class="mx-auto"
             width="750px"
-              >
-            <v-container fluid>
+            >
+            <v-container >
                 <v-row
                   align="center"
-                >
+                 >
                   <v-col cols="12">
+                    <v-col class="mb-2">
+                      <h3 class="text-center headline">Заявка на создание сетевого каталога</h3>
+                      <span class="blue-grey--text text--darken-1">Данная услуга позволяет создать сетевой каталог (сетевую папку).
+                        Название каталога складывается из аббревиатуры организации, далее название департамента, затем название папки. Пример: «AHS-Бухгалтерия-Оперативный учет», где «AHS» – аббревиатура АО Агрохолдинг "СТЕПЬ", «Бухгалтерия» – наименование департамента, «Оперативный учет» - название папки.
+                        Также вы сможете отслеживать статус заявки в разделе "Мои заявки".</span>
+                        <hr>
+                    </v-col>
                     <v-autocomplete
-                      :items="info"
+                      :items="org"
                       outlined
                       dense
                       chips
                       small-chips
-                      label="ФИО"
-                      item-text="LAST_NAME"
-                      item-value="ID"
+                      label="Выберите организацию"
+                    >
+                  </v-autocomplete>
+                    <v-text-field 
+                      outlined
+                      dense
+                      label="Название департамента"
+                    ></v-text-field>
+                    <v-autocomplete
+                    :items="info"
+                      outlined
+                      dense
+                      chips
+                      small-chips
+                      label="Бизнес владелец"
+                      :item-text="info => info.LAST_NAME + ' ' + info.NAME"
+                      :item-value="info => info.ID"
+                    > 
+                    </v-autocomplete>
+                    <v-autocomplete
+                    :items="info"
+                      outlined
+                      dense
+                      chips
+                      small-chips
+                      label="Укажите пользователей которые могут создавать удалять и редактровать файлы"
+                      :item-text="info => info.LAST_NAME + ' ' + info.NAME"
+                      :item-value="info => info.ID"
                       multiple
                     > 
-                </v-autocomplete>
-                  </v-col>
-                  </v-row>
+                    </v-autocomplete>
+                    <v-autocomplete
+                    :items="info"
+                      outlined
+                      dense
+                      chips
+                      small-chips
+                      label="Укажите пользователей которые могут только просматривать файлы"
+                      :item-text="info => info.LAST_NAME + ' ' + info.NAME"
+                      :item-value="info => info.ID"
+                      close
+                      deletable-chips
+                       multiple
+                      >
+                      <template v-slot:selection="info">
+                        <v-chip
+                          v-bind="info.attrs"
+                          :input-value="info.selected"
+                          close
+                          @click="info.select"
+                          @click:close="remove(info.item)"
+                        >
+                        <v-avatar>
+                          <img :src="info => info.PERSONAL_PHOTO" alt="trevor">
+                        </v-avatar>
+                         </v-chip>
+                      </template>
+            </v-autocomplete>
+            </v-col>
+            </v-row>
             </v-container>
+            <v-card-actions>
+                <v-btn class="mx-auto" depressed color="success" @click="isUpdating = true">Отправить</v-btn>
+            </v-card-actions>
             </v-card>
-           <!-- <v-card
-              class="mx-auto"
-              max-width="344"
+            <!--<v-row>
+           <v-card
+              class="mx-auto ma-2"
+              max-width="400"
               outlined
+              tile
               v-for="item in info"
+              :key="item.id"
             >
+
               <v-list-item three-line>
                 <v-list-item-content>
                   <div class="overline mb-4">{{ item.WORK_COMPANY }}</div>
@@ -49,50 +117,76 @@
                 </v-list-item-content>
           
                 <v-list-item-avatar
-                  tile
                   size="80"
                   color="grey"
+                  rounded
                 >
-                <v-img :src="item.PERSONAL_PHOTO"></v-img>
+               <v-img v-if="item.PERSONAL_PHOTO" :src="item.PERSONAL_PHOTO"></v-img>
                 </v-list-item-avatar>
               </v-list-item>
-            </v-card>-->
-          </template>
-   </v-app>
-   {{ info }}
-   </div>
+            </v-card>
+            </v-row>-->
+            </template>
+        </v-app>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-   
-  <script>
-      var app = new Vue({
-          el: '#items',
-          vuetify: new Vuetify(),
-          data: {
-              categoty_class: 'pl_categories list-group-item-action pl_button',
-              item_class: 'pl_categories list-group-item-action',
-              message: 'Для получения доступа к сервису или услуге, выберите нужный раздел, а затем услугу, после заполнения необходимых полей формы заявка будет отправлена на согласование отвественных сотрудникам. Статус заявки вы можете отслеживать в разделе',
-              path_service: '../../it-uslugi/uslugi/',
-              info: '',
-              i: ''
+    <script>
+        var app = new Vue({
+            el: '#items',
+            vuetify: new Vuetify(),
+            data: {
+                categoty_class: 'pl_categories list-group-item-action pl_button',
+                item_class: 'pl_categories list-group-item-action',
+                message: 'Для получения доступа к сервису или услуге, выберите нужный раздел, а затем услугу, после заполнения необходимых полей формы заявка будет отправлена на согласование отвественных сотрудникам. Статус заявки вы можете отслеживать в разделе',
+                path_service: '../../it-uslugi/uslugi/',
+                info: [],
+                org: ['Управляющая компания', 'test'],
+                i: '0',
+            },
 
-          },
-
-          mounted() {
-    axios
-      .get('https://portal.ahstep.ru/rest/1/s7i3kl0o2ydbm29h/user.get.json',
-        {
-            params: {
-            ACTIVE: "Y",
-            start: this.i
-        }
-        })
-      .then(response => (this.info = response.data.result));
-  }
-});
-  </script>
+            mounted() {
+                /* for (let i = 0, t = 250; i < t; i = i + 50) {
+                        fetch('https://portal.ahstep.ru/rest/1/s7i3kl0o2ydbm29h/user.get.json', {
+                                options: {
+                                    ACTIVE: "Y",
+                                    start: 150
+                                }
+                            })
+                            .then(response => response.json())
+                            //.then(response => (this.info = response.result, this.info1 = response.result))
+                            .then(response => (this.info = this.info.concat(response.result)))
+                            //this.info2 = this.info.concat(this.info1)
+                    }
+                }*/
+                for (let i = 0, t = 1650; i < t; i = i + 50) {
+                    axios
+                        .get('https://portal.ahstep.ru/rest/1/s7i3kl0o2ydbm29h/user.get.json', {
+                            onUploadProgress: function(progressEvent) {},
+                            params: {
+                                ACTIVE: "Y",
+                                start: i
+                            }
+                        })
+                        .then(response => (this.info = this.info.concat(response.data.result)))
+                }
+            }
+            /*mounted() {
+                    axios
+                        .get('/ahstep/request/list/ajax.php', {
+                            auth: {
+                                username: 'admin',
+                                password: 'Htdjk.wbz17'
+                            }
+                        })
+                        .then(response => (this.info = response.data))
+                        .catch((error) => console.log(error))
+                }*/
+        });
+    </script>
 </body>
+
 </html>
