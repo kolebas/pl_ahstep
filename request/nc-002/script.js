@@ -74,26 +74,17 @@ $(document).ready(function() {
         });
     }
 
-    var org_func = function() {
-        org_v = org.value;
-        fld_name_complete.value = org_v + '-';
-    }
-
-    var dep_func = function() {
-        dep_v = dep.value;
-        fld_name_complete.value = org_v + '-' + dep_v + '-';
-    }
-
-    var cat_func = function() {
-        cat_v = cat.value;
-        fld_name_complete.value = org_v + '-' + dep_v + '-' + cat_v;
+    var inner = function(x) {
+        fld_name_complete.value = org.value + '-' + dep.value + '-' + cat.value;
     }
 
     var check = function() {
+        btn.classList.add('ui-btn-clock', 'ui-btn-disabled');
         if (fm.checkValidity()) {
             sbmt();
         } else {
             alert('Заполните все поля');
+            btn.classList.remove('ui-btn-clock', 'ui-btn-disabled');
             doc.getElementById('div_dep').parentNode.classList.add('ui-ctl-danger');
         }
 
@@ -104,9 +95,9 @@ $(document).ready(function() {
         console.log('Нажата');
     }
 
-    org.addEventListener('change', org_func, false);
-    dep.addEventListener('change', dep_func, false);
-    cat.addEventListener('change', cat_func, false);
+    org.addEventListener('change', inner, false);
+    dep.addEventListener('change', inner, false);
+    cat.addEventListener('change', inner, false);
     btn.addEventListener('click', check, false);
     btn_ticket.addEventListener('click', my_ticket, false);
 

@@ -23,8 +23,7 @@ $cmnt = $_POST['cmnt'];
     array(
      "IBLOCK_ID" => 85,
 	 "NAME" => $cnt,
-     //"NAME" => $fld_name,
-     "CREATED_BY" => "user_".$GLOBALS["USER"]->GetID(),
+   "CREATED_BY" => "user_".$GLOBALS["USER"]->GetID(),
     )
    );
 

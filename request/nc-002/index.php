@@ -14,7 +14,7 @@ $arFilter = Array(
 ?> 
 
 <link href="style.css" rel="stylesheet">
-<script src="main.js"></script>
+<script src="script.js"></script>
 
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
