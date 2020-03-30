@@ -38,9 +38,11 @@ $(document).ready(function(){
 	}
 	
 	var check = function(){
+		btn_send.classList.add('ui-btn-clock', 'ui-btn-disabled');
 		if ( fm.checkValidity ()) {
 			sbmt();
 		}	else {
+			btn_send.classList.remove('ui-btn-clock', 'ui-btn-disabled');
 			alert ('Заполните все поля');
 		}
 
