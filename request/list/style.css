@@ -1,3 +1,16 @@
 .test{
-    border-left: 4px solid red!important;
+    border-left: 4px solid red;
   }
+
+.item.true{
+    border-left: 4px solid #43A047;
+  }
+.item.false{
+    border-left: 4px solid #F44336;
+  }
+.v-chip.true{
+    background: #43A047!important;
+  }
+.v-chip.false{
+    background: #F44336!important;
+  }    

@@ -42,11 +42,21 @@
                 </v-list-item-group>
               </v-navigation-drawer>
               </nav>
-              <v-content>
+              <v-content class='blue-grey lighten-5'>                
                   <v-container class="my-5">
-                    <v-card class="pa-5 mb-2 test" v-for="(item, i) in info" :key=i @click.stop="test(item.ID)">
-                      <v-layout row wrap>
-                        <v-flex xs12 md6>
+                    <v-layout row class="mb-3">
+                      <v-btn small depressed color="blue-grey lighten-5" @click="sortBy('LAST_NAME')"> 
+                        <v-icon left small>folder</v-icon>
+                        <span class="caption text-lowercase">By project</span>
+                      </v-btn>
+                      <v-btn small depressed color="blue-grey lighten-5">
+                        <v-icon left small>person</v-icon>
+                        <span class="caption text-lowercase">By person</span>
+                      </v-btn>
+                    </v-layout>
+                    <v-card flat class='pl-3' v-for="(item, i) in info" :key=i @click.stop="get_user_id(item.ID)">
+                      <v-layout row wrap :class="`pa-3 item ${item.ACTIVE}`">
+                        <v-flex xs12 md4>
                           <div class="overline mb-2">ФИО</div>
                           <div>{{ item.LAST_NAME }} {{ item.NAME }}</div>
                         </v-flex>
@@ -62,45 +72,87 @@
                           <div class="overline mb-2">Телефон</div>
                           <div>{{ item.WORK_PHONE }}</div>
                         </v-flex>
+                        <v-flex xs6 sm4 md2>
+                          <div >
+                            <v-chip small :class="`${item.ACTIVE} white--text caption my-2`">{{ item.ACTIVE }}</v-chip>
+                          </div>
+                        </v-flex>
                       </v-layout>
                     </v-card>
       
                     </v-layout>
                     <v-dialog
                           v-model="dialog"
-                          max-width="290"
-                       >
+                          max-width="490"
+                        >
                         <v-card>
-                          <v-card-title class="headline">Use Google's location service?</v-card-title>
-
-                            <v-card-text>
-                              Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
-                            </v-card-text>
-
-                          <v-card-actions>
-                              <v-spacer></v-spacer>
-
-                              <v-btn
-                                color="green darken-1"
-                                text
-                                @click="dialog = false"
-                              >
-                                Disagree
-                              </v-btn>
-
-                              <v-btn
-                                color="green darken-1"
-                                text
-                                @click="dialog = false"
-                              >
-                                Agree
-                              </v-btn>
-                            </v-card-actions>
-                        </v-card>
+                          <v-img
+                            class="mx-auto"
+                            height="100"
+                            width="100"
+                            src="logo.jpg"
+                            >
+                          </v-img>
+                          
+                            <v-layout >
+                              <v-flex xs12 md4 class="ma-4 ">
+                                <v-avatar
+                                v-if='user.PERSONAL_PHOTO'
+                                class="profile"
+                                color="grey"
+                                size="164"
+                                >
+                                  <img
+                                  :src='user.PERSONAL_PHOTO'>
+                                </v-avatar>
+                              </v-flex>
+                              <v-flex xs12 md8>
+                                <v-card-text>
+                                  <br><b> {{ user.LAST_NAME }} {{ user.NAME }} </b><br>
+                                  Электронная почта: {{ user.EMAIL }} <br>
+                                  Рабочий телефон: {{ user.WORK_PHONE }} <br>
+                                  Внутренний: {{ user.UF_PHONE_INNER }} <br>
+                                  Компания: {{ user.WORK_COMPANY }} <br>
+                                  <v-card-actions>
+                                    <v-spacer></v-spacer>
+  
+                                    <v-btn
+                                      color="grey darken-1"
+                                      text
+                                      @click="dialog = false"
+                                    >
+                                      Закрыть
+                                    </v-btn>
+                                  </v-card-actions>
+                                </v-card-text>                                
+                              </v-flex>
+                              </v-layout>                              
+                          </v-card>
                       </v-dialog>
                 </v-container>
+             <!--   <v-container class="my-5">
+                    <v-card class="pa-5 mb-2 test" v-for="(item, i) in result" :key=i @click.stop="get_user_id(item.ID)">
+                      <v-layout row wrap>
+                        <v-flex xs12 md4>
+                          <div class="overline mb-2">Название</div>
+                          <div>{{ item.LAST_NAME }} {{ item.NAME }}</div>
+                        </v-flex>
+                        <v-flex xs6 sm4 md4>
+                          <div class="overline mb-2">Автор</div>
+                          <div>{{ item.CREATED_USER_NAME }}</div>
+                        </v-flex>
+                        <v-flex xs6 sm4 md2>
+                          <div class="overline mb-2">ID</div>
+                          <div>{{ item.ID}}</div>
+                        </v-flex>
+                        <v-flex xs6 sm4 md2>
+                          <div class="overline mb-2">Дата создания</div>
+                          <div>{{ item.DATE_CREATE }}</div>
+                        </v-flex>
+                      </v-layout>
+                    </v-card>
               </v-content>
-          <!--  <v-card
+           <!-- <v-card
             class="mx-auto"
             width="750px"
             >
@@ -234,6 +286,8 @@
                 message: 'Для получения доступа к сервису или услуге, выберите нужный раздел, а затем услугу, после заполнения необходимых полей формы заявка будет отправлена на согласование отвественных сотрудникам. Статус заявки вы можете отслеживать в разделе',
                 path_service: '../../it-uslugi/uslugi/',
                 info: [],
+                user: [],
+                result: [],
                 drawer: false,
                 dialog: false,
                 links: [
@@ -250,55 +304,49 @@
                         .get('https://portal.ahstep.ru/rest/1/s7i3kl0o2ydbm29h/user.get.json', {
                             onUploadProgress: function(progressEvent) {},
                             params: {
-                                ACTIVE: "Y",
+                                //ACTIVE: "Y",
                                 start: i
                             }
                         })
                         .then(response => (this.info = this.info.concat(response.data.result)))
                 }
+              axios
+                .get('/ahstep/request/list/ajax.php')
+                  .then(response => (this.result = response.data))
+                  .catch((error) => console.log(error))
+                  
+                
             },
-            computed:{
-            filteredItems: function(){
-                return this.info.filter(ID => {
-            		return this.item.ID.length > 1;
-                });
-            }
-            },
-            
+                        
             methods:{
-              test: function(user_id){
-                console.log(user_id/.yt;lfulo,jk[pu`7j;/////////////////////////////////////////.++++++++++++++++++???????///////////////
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                 rgn6htyj8);
+              get_user_id: function(user_id){
+                console.log(user_id);
+                for (i = 0; i < this.info.length; i++ ){
+                  //console.log(this.info[i].ID);
+                  if (this.info[i].ID == user_id){
+                    //alert(this.info[i].ID );
+                    this.user = this.info[i];
+                    //alert (this.user.EMAIL);
+                  }
+                 }
                 this.dialog = true;
+              },
+              sortBy(prop){
+                this.info.sort((a,b) => a[prop] < b[prop] ? -1 : 1)
               }
             }
             
-            /*mounted() {
+           /* mounted() {
                     axios
                         .get('/ahstep/request/list/ajax.php', {
-                            auth: {
-                                username: 'admin',
-                                password: '*********'
-                            }
+                            
                         })
-                        .then(response => (this.info = response.data))
+                        .then(response => (this.result = response.data))
                         .catch((error) => console.log(error))
                 }*/
         });
-        console.log(app.filteredItems);
+        //console.log(app.filteredItems);
     </script>
           
 </body>
 </html>
- cinmnb0;jhvij/ok;/l'565oikgkmhoyiokl

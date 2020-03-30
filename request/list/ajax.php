@@ -1,6 +1,7 @@
 <?
 require_once($_SERVER["DOCUMENT_ROOT"].'/bitrix/modules/main/include/prolog_before.php');
-$pl_users = Array();
+
+/*$pl_users = Array();
 $filter = Array
 (
     "ACTIVE" => "Y",
@@ -14,6 +15,16 @@ $rsUsers = CUser::GetList(($by="last_name"), ($order="asc"), $filter, Array("NAM
    {
      array_push($pl_users, $arUser);
    };
+*/
+$result = Array();
+$arFilter = Array(
+	"IBLOCK_ID"=>"64"
+	);
+   $res = CIBlockElement::GetList(Array("NAME"=>"ASC"), $arFilter); 
+   
+   while($ar_fields = $res->GetNext()){
+    array_push ($result, $ar_fields);
+   }   
 header('Content-Type: application/json; charset=utf-8');
-echo json_encode($pl_users);
+echo json_encode($result);
 ?>
