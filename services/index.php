@@ -146,7 +146,7 @@ Extension::load('ui.bootstrap4');
 					name: 'Создание нового каталога (папки)',
 					img: 'img/folder_add.png',
 					type: 'fldr',
-					lnk: '../../it-uslugi/uslugi/nc-002.php'
+					lnk: '../request/nc-002'
 				},
 				{
 					name: 'Доступ к каталогу (папке)',
