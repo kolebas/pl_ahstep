@@ -45,14 +45,26 @@
               <v-content class='blue-grey lighten-5'>                
                   <v-container class="my-5">
                     <v-layout row class="mb-3">
-                      <v-btn small depressed color="blue-grey lighten-5" @click="sortBy('LAST_NAME')"> 
-                        <v-icon left small>folder</v-icon>
-                        <span class="caption text-lowercase">By project</span>
-                      </v-btn>
-                      <v-btn small depressed color="blue-grey lighten-5">
-                        <v-icon left small>person</v-icon>
-                        <span class="caption text-lowercase">By person</span>
-                      </v-btn>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-btn small depressed color="blue-grey lighten-5" @click="sortBy('LAST_NAME')" v-on="on"> 
+                            <v-icon left small>person</v-icon>
+                            <span class="caption text-lowercase">By person</span>
+                          </v-btn>
+                          </template>
+                          <span>Сортировка по имени</span>
+                      </v-tooltip>
+                      
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-btn small depressed color="blue-grey lighten-5" @click="sortBy('EMAIL')" v-on="on">
+                            <v-icon left small>folder</v-icon>
+                            <span class="caption text-lowercase">By email</span>
+                          </v-btn>
+                        </template>
+                        <span>Сортировка по электронной почте</span>
+                      </v-tooltip>
+                      
                     </v-layout>
                     <v-card flat class='pl-3' v-for="(item, i) in info" :key=i @click.stop="get_user_id(item.ID)">
                       <v-layout row wrap :class="`pa-3 item ${item.ACTIVE}`">
@@ -62,7 +74,7 @@
                         </v-flex>
                         <v-flex xs6 sm4 md2>
                           <div class="overline mb-2">E-mail</div>
-                          <div>{{ item.EMAIL }}</div>
+                          <div class="text-lowercase">{{ item.EMAIL }}</div>
                         </v-flex>
                         <v-flex xs6 sm4 md2>
                           <div class="overline mb-2">Должность</div>
