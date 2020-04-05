@@ -8,8 +8,15 @@ Extension::load('ui.bootstrap4');
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <link href="style.css" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
 <nav aria-label="breadcrumb">
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a href="/">Главная</a></li>
@@ -17,21 +24,94 @@ Extension::load('ui.bootstrap4');
 	</ol>
 </nav>
 <br>
-<div id="items" class="pl_container">
-	<div class="pl_title">
-		<h2 style="text-align: center;">{{ title }}</h2>
-		<p style="line-height: 1.5;">
-			{{ message }} <a href="../../../it-uslugi/helpdesk/my_ticket.php"><button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button></a>
-		</p>
-	</div>
-	<div v-for="(category, key) in categories">
-		<a :href="'#' + category.type" role="button" data-toggle="collapse" :class="categoty_class"><img :src=category.img> <span class="pl_text">{{ category.name }}</span></a>
-		<div class="collapse" :id="category.type">
-			<div v-bind="type = category.type" class="card card-body">
-				<card-item-list v-for="item in filteredItems" :item="item" ></card-item-list>
-			</div>
-		</div>
-	</div>
+<div id="items" >
+	<v-app>
+		<v-content>
+			<v-row
+			justify="center"
+			>
+				<v-card
+				class="mx-8 blue-grey lighten-5"
+				max-width="750"
+				>
+					<v-card-text>
+						<div>
+							<p class="headline text--primary text-center">{{ title }}</p>
+							<!--<h2 style="text-align: center;">{{ title }}</h2>-->
+							<p style="line-height: 1.5;">
+								{{ message }} <a href="../../../it-uslugi/helpdesk/my_ticket.php"><button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button></a>
+							</p>
+						</div>
+					</v-card-text>
+					<div v-for="(category, key) in categories">
+						<a :href="'#' + category.type"  role="button" data-toggle="collapse" :class="categoty_class"><img :src=category.img> <span class="pl_text">{{ category.name }}</span></a>
+						<div class="collapse" :id="category.type">
+							<div class="card card-body">
+								<card-item-list v-for="item in items" v-if="item.type == category.type" :item="item" ></card-item-list>
+							</div>
+						</div>
+					</div>
+				</v-card>
+				<v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn class="mr-12"fab v-on="on" @click="dialog = true"> 
+                      <v-icon x-large color="green darken-1">store</v-icon> 
+                    </v-btn>
+                  </template> 
+                  <span>Форма заказа продуктов</span>                       
+				</v-tooltip>
+				<v-dialog
+                          v-model="dialog"
+                          max-width="590"
+                        >
+                        <v-card class="text-center">
+							<v-card-text class="pa-0">
+								<p class="pt-4 headline text--primary">Форма заказа продуктов</p>
+								<p>
+									Для заказ продуктов заполните все необходимые поля 
+								</p>								
+                            </v-card-text>
+							<v-col>
+								<v-select
+								:items="product"
+								outlined
+								dense
+								small-chips
+								multiple
+								label="Выберите продукты"
+								label="Filled style"
+								></v-select>
+								<v-layout >
+									<v-flex xs12 md6>
+										<v-select
+										:items="product"
+										outlined
+										dense
+										chips
+										multiple
+										label="Выберите продукты"
+										label="Filled style"
+										></v-select>
+									</v-flex>
+									<v-flex xs12 md6>
+										<v-card-text>
+											<p>Форма заказа продуктов</p>
+										</v-card-text>                                
+									</v-flex>
+                            	</v-layout>	
+								<v-btn small color="primary">Отправить</v-btn>
+							</v-col>
+							
+								<v-card-text>						
+                                  Форма заказа продуктов
+								</v-card-text>
+								                          	                     
+                          </v-card>
+                      </v-dialog> 
+			</v-row>
+		</v-content>
+		
+	</v-app>
 </div>
 
 <script>
@@ -49,14 +129,16 @@ Extension::load('ui.bootstrap4');
 
 	var app = new Vue({
 		el: '#items',
+		vuetify: new Vuetify(),
 		data: {
 			title: 'Заявки на доступ к ИТ услугам',
 			categoty_class: 'pl_categories list-group-item-action pl_button',
 			item_class: 'pl_categories list-group-item-action',
 			message: 'Для получения доступа к сервису или услуге, выберите нужный раздел, а затем услугу, после заполнения необходимых полей формы заявка будет отправлена на согласование отвественных сотрудникам. Статус заявки вы можете отслеживать в разделе',
 			path_service: '../../it-uslugi/uslugi/',
+			dialog: false,
 			type: '',
-
+			product: ['Молочная продукция', 'Гречневая крупа', 'Яблоки'],
 			categories: [{
 					name: 'Нормативно-справочная информация',
 					img: 'img/list.png',
@@ -168,13 +250,27 @@ Extension::load('ui.bootstrap4');
 				},
 			]			
 		},
-		computed:{
+		// Тестирование фильтрации
+		/*computed:{
             filteredItems: function(){
                 return this.items.filter(item => {
             		return item.type.includes(this.type);
                 });
             }
-		}
+		},*/
+		
+		//Тестирование функций
+		/*methods:{
+			category_type: function (prop) {
+				console.log(prop);
+				for (i = 0; i < this.items.length; i++){
+					if(this.items[i].type == prop)
+					{
+						console.log(this.items[i].name)
+					}
+				}	
+			} 
+		}*/
 	})
 </script>
 
