@@ -27,6 +27,21 @@ Extension::load('ui.bootstrap4');
 <div id="items" >
 	<v-app>
 		<v-content>
+			<v-snackbar
+			v-model="snackbar"
+			top
+			absolute
+			color="success"
+			>
+			Ваша заявка успешно отправлена
+				<v-btn
+					dark
+					text
+					@click="snackbar = false"
+				>
+					Закрыть
+				</v-btn>
+			</v-snackbar>
 			<v-row
 			justify="center"
 			>
@@ -37,7 +52,6 @@ Extension::load('ui.bootstrap4');
 					<v-card-text>
 						<div>
 							<p class="headline text--primary text-center">{{ title }}</p>
-							<!--<h2 style="text-align: center;">{{ title }}</h2>-->
 							<p style="line-height: 1.5;">
 								{{ message }} <a href="../../../it-uslugi/helpdesk/my_ticket.php"><button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button></a>
 							</p>
@@ -61,9 +75,9 @@ Extension::load('ui.bootstrap4');
                   <span>Форма заказа продуктов</span>                       
 				</v-tooltip>
 				<v-dialog
-                          v-model="dialog"
-                          max-width="590"
-                        >
+                    v-model="dialog"
+                    max-width="590"
+                    >
                         <v-card class="text-center">
 							<v-card-text class="pa-0">
 								<p class="pt-4 headline text--primary">Форма заказа продуктов</p>
@@ -90,16 +104,20 @@ Extension::load('ui.bootstrap4');
 										chips
 										multiple
 										label="Выберите продукты"
-										label="Filled style"
 										></v-select>
+										<v-card-text>
+											<p>Укажите необходимое количество</p>
+										</v-card-text>
 									</v-flex>
 									<v-flex xs12 md6>
 										<v-card-text>
 											<p>Форма заказа продуктов</p>
-										</v-card-text>                                
+										</v-card-text> 
+										<v-text-field dense outlined v-model="input1"> test</v-text-field>                               
 									</v-flex>
                             	</v-layout>	
-								<v-btn small color="primary">Отправить</v-btn>
+								<v-btn @click="sendform()" :loading="loading" color="success">Отправить</v-btn>
+								<v-btn @click="dialog = false" color="info">Отмена</v-btn>
 							</v-col>
 							
 								<v-card-text>						
@@ -107,6 +125,39 @@ Extension::load('ui.bootstrap4');
 								</v-card-text>
 								                          	                     
                           </v-card>
+						  <v-card
+							flat
+							class="py-12"
+						>
+							<v-card-text>
+							<v-row
+								align="center"
+								justify="center"
+							>
+								<v-col cols="12">
+								<p class="text-center">Multiple</p>
+								</v-col>
+								<v-btn-toggle
+								v-model="toggle_exclusive"
+								multiple
+								>
+								<v-btn>
+									<v-icon>mdi-format-align-left</v-icon>
+								</v-btn>
+								<v-btn>
+									<v-icon>mdi-format-align-center</v-icon>Молочная продукция
+								</v-btn>
+								<v-btn>
+									<v-icon>mdi-format-align-right</v-icon>Яблоки
+								</v-btn>
+								<v-btn>
+									<v-icon>mdi-format-align-justify</v-icon>Греча
+								</v-btn>
+								</v-btn-toggle>
+
+							</v-row>
+							</v-card-text>
+						</v-card>
                       </v-dialog> 
 			</v-row>
 		</v-content>
@@ -138,6 +189,10 @@ Extension::load('ui.bootstrap4');
 			path_service: '../../it-uslugi/uslugi/',
 			dialog: false,
 			type: '',
+			toggle_exclusive: '',
+			input1: '',
+			loading: false,
+			snackbar: false,
 			product: ['Молочная продукция', 'Гречневая крупа', 'Яблоки'],
 			categories: [{
 					name: 'Нормативно-справочная информация',
@@ -219,9 +274,9 @@ Extension::load('ui.bootstrap4');
 					lnk: '../../it-uslugi/uslugi/ws-001.php'
 				},
 				{
-					name: 'Заявки на установку прораммного обеспечения',
+					name: 'Установка прораммного обеспечения',
 					img: 'img/soft.png',
-					type: 'buy_req',
+					type: 'user',
 					lnk: '../../it-uslugi/uslugi/sf-001.php'
 				},
 				{
@@ -258,6 +313,25 @@ Extension::load('ui.bootstrap4');
                 });
             }
 		},*/
+		methods:{
+			sendform: function(){
+				this.loading = true;				
+				console.log('sendform');
+				axios
+                .post('ajax.php',{
+    				input1: this.input1
+				})
+                .then(function (response) {
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});				
+				this.dialog = false;
+				//this.loading = false;
+				this.snackbar = true;
+			}
+		}
 		
 		//Тестирование функций
 		/*methods:{
