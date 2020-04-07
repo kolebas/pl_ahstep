@@ -78,85 +78,112 @@ Extension::load('ui.bootstrap4');
                     v-model="dialog"
                     max-width="590"
                     >
-                        <v-card class="text-center">
+					<v-card color="grey lighten-5">
 							<v-card-text class="pa-0">
-								<p class="pt-4 headline text--primary">Форма заказа продуктов</p>
-								<p>
-									Для заказ продуктов заполните все необходимые поля 
+								<p class="text-center pt-4 headline text--primary">Форма заказа продуктов</p>
+								<p class="text-center">
+									Для заказа выберите необхудимые продукты 
 								</p>								
-                            </v-card-text>
+                            
 							<v-col>
-								<v-select
-								:items="product"
-								outlined
-								dense
-								small-chips
-								multiple
-								label="Выберите продукты"
-								label="Filled style"
-								></v-select>
-								<v-layout >
-									<v-flex xs12 md6>
-										<v-select
-										:items="product"
-										outlined
-										dense
-										chips
-										multiple
-										label="Выберите продукты"
-										></v-select>
-										<v-card-text>
-											<p>Укажите необходимое количество</p>
-										</v-card-text>
-									</v-flex>
-									<v-flex xs12 md6>
-										<v-card-text>
-											<p>Форма заказа продуктов</p>
-										</v-card-text> 
-										<v-text-field dense outlined v-model="input1"> test</v-text-field>                               
-									</v-flex>
-                            	</v-layout>	
-								<v-btn @click="sendform()" :loading="loading" color="success">Отправить</v-btn>
-								<v-btn @click="dialog = false" color="info">Отмена</v-btn>
-							</v-col>
+								<v-row justify="center">
+										<v-btn-toggle
+											v-model="toggle_exclusive"
+											multiple
+											>								
+											<v-btn
+												@click="btn_milk = !btn_milk ">
+												<v-icon >mdi-format-align-center</v-icon>Молочная продукция
+											</v-btn>
+											<v-btn
+												@click="apl_btn = !apl_btn">
+												<v-icon color="green darken-1">mdi-apple</v-icon>Яблоки
+											</v-btn>
+											<v-btn
+												@click="btn_krp = !btn_krp">
+												<v-icon color="green darken-4">mdi-pasta</v-icon>Греча
+											</v-btn>
+									</v-btn-toggle>
+								</v-row>
+								<v-card 
+									v-if="btn_milk"
+									outlined
+									class="mt-2 mx-8"
+									>
+									<div left class="overline ml-4 my-2">Молочная продукция</div>
+									<v-row align="center" justify="center" no-gutters>
+										<v-col cols="8">
+											Укажите кефира
+										</v-col>
+										<v-col cols="2" >
+											<v-text-field  dense v-model="input1"></v-text-field>
+										</v-col>												
+									</v-row>
+									<v-row align="center" justify="center" no-gutters>
+										<v-col cols="8">
+											Укажите сыра
+										</v-col>
+										<v-col cols="2">
+											<v-text-field dense v-model="input1"></v-text-field>
+										</v-col>
+									</v-row>
+								</v-card>
+								<v-card 
+									v-if="apl_btn"
+									outlined
+									class="mt-2 mx-8"
+									>
+									<div left class="overline ml-4 my-2">Яблоки</div>
+									<v-row align="center" justify="center" no-gutters>
+										<v-col  cols="8">
+											Укажите количество красных яблок
+										</v-col>
+										<v-col cols="2" >
+											<v-text-field  dense v-model="label" label="Кг."></v-text-field>
+										</v-col>												
+									</v-row>
+									<v-row align="center" justify="center" no-gutters>
+										<v-col cols="8">
+											Укажите количество зеленых яблок
+										</v-col>
+										<v-col cols="2">
+											<v-text-field dense v-model="input1" label="Кг."></v-text-field>
+										</v-col>
+									</v-row>
+								</v-card>
+								<v-card 
+									v-if="btn_krp"
+									outlined
+									class="mt-2 mx-8"
+									
+									>
+									<div left class="overline ml-4 my-2">Крупы</div>
+									<v-row align="center" justify="center" no-gutters>
+										<v-col cols="8">
+											Укажите количество упаковок гречки
+										</v-col>
+										<v-col cols="2" >
+											<v-text-field  dense v-model="input1"></v-text-field>
+										</v-col>												
+									</v-row>
+									<v-row align="center" justify="center" no-gutters>
+										<v-col cols="8">
+											Укажите количество упаковок риса
+										</v-col>
+										<v-col cols="2">
+											<v-text-field dense v-model="input1"></v-text-field>
+										</v-col>
+									</v-row>
+								</v-card>
+								<v-row class="mt-2" align="center" justify="center">						
+									<v-btn class="mx-1" @click="sendform()" :loading="loading" color="success">Отправить</v-btn>
+									<v-btn class="mx-1" @click="dialog = false" color="grey lighten-1">Отмена</v-btn>
+								</v-row>
+							</v-card-text>								
 							
-								<v-card-text>						
-                                  Форма заказа продуктов
-								</v-card-text>
-								                          	                     
-                          </v-card>
-						  <v-card
-							flat
-							class="py-12"
-						>
-							<v-card-text>
-							<v-row
-								align="center"
-								justify="center"
-							>
-								<v-col cols="12">
-								<p class="text-center">Multiple</p>
-								</v-col>
-								<v-btn-toggle
-								v-model="toggle_exclusive"
-								multiple
-								>
-								<v-btn>
-									<v-icon>mdi-format-align-left</v-icon>
-								</v-btn>
-								<v-btn>
-									<v-icon>mdi-format-align-center</v-icon>Молочная продукция
-								</v-btn>
-								<v-btn>
-									<v-icon>mdi-format-align-right</v-icon>Яблоки
-								</v-btn>
-								<v-btn>
-									<v-icon>mdi-format-align-justify</v-icon>Греча
-								</v-btn>
-								</v-btn-toggle>
-
-							</v-row>
-							</v-card-text>
+															
+								
+							</v-col>
 						</v-card>
                       </v-dialog> 
 			</v-row>
