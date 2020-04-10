@@ -1,0 +1,239 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
+
+<style>
+    .theme--light.v-application {
+    background: transparent;
+    }
+	.v-btn--outlined .v-btn__content .v-icon, .v-btn--round .v-btn__content .v-icon {
+    color: green;
+}
+</style>
+
+<div id="items" style="max-height: 1px;">
+	<v-app>		
+		<v-snackbar
+		v-model="snackbar"
+		top
+		absolute
+		color="success"
+		>
+		Ваша заявка успешно отправлена
+			<v-btn
+				dark
+				text
+				@click="snackbar = false"
+			>
+				Закрыть
+			</v-btn>
+		</v-snackbar>
+		<v-row
+		justify="center"
+		>   
+        <div id="store" style="margin-bottom: 15px;">
+			<v-tooltip bottom>
+				<template v-slot:activator="{ on }">
+				<v-btn fab v-on="on" @click="dialog = true"> 
+					<v-icon x-large color="green darken-1">store</v-icon> 
+				</v-btn>
+				</template> 
+				<span>Форма заказа продуктов</span>                       
+			</v-tooltip>
+        </div>
+			<v-dialog
+				v-model="dialog"
+				max-width="590"
+				>
+				<v-card color="grey lighten-5">
+				<v-card-text class="pa-0">
+					
+					<p class="text-center pt-4 headline text--primary">
+						Форма заказа продуктов
+					</p>
+					<p class="text-center">
+						Для заказа выберите необходимые продукты 
+					</p>								
+				
+					<v-col>
+						<v-row justify="center">
+								<v-btn-toggle										
+									multiple
+									>								
+									<v-btn
+										v-for="(btn, index) in btns"
+										:key="btn.text"
+										min-width="180"
+										@click="show_card(btn.act)">
+										<v-icon :color="btn.color">{{ btn.icon }}</v-icon>{{ btn.text }}
+									</v-btn>
+							</v-btn-toggle>
+						</v-row>
+						<v-card 
+							v-if="btn_milk"
+							outlined
+							class="mt-2 mx-8"
+							>
+							<div left class="overline ml-4 my-2">Молочная продукция</div>
+							<v-row align="center" justify="center" no-gutters>
+								<v-col cols="8">
+									Укажите кефира
+								</v-col>
+								<v-col cols="2" >
+									<v-text-field  dense v-model="input1" label="Кг." :rules="inputRules"></v-text-field>
+								</v-col>												
+							</v-row>
+							<v-row align="center" justify="center" no-gutters>
+								<v-col cols="8">
+									Укажите сыра
+								</v-col>
+								<v-col cols="2">
+									<v-text-field dense v-model="input2" label="Кг."></v-text-field>
+								</v-col>
+							</v-row>
+						</v-card>
+						<v-card 
+							v-if="btn_apl"
+							outlined
+							class="mt-2 mx-8"
+							>
+							<div left class="overline ml-4 my-2">Яблоки</div>
+							<v-row align="center" justify="center" no-gutters>
+								<v-col  cols="8">
+									Укажите количество красных яблок
+								</v-col>
+								<v-col cols="2" >
+									<v-text-field  dense v-model="input3" label="Кг." :rules="inputRules"></v-text-field>
+								</v-col>												
+							</v-row>
+							<v-row align="center" justify="center" no-gutters>
+								<v-col cols="8">
+									Укажите количество зеленых яблок
+								</v-col>
+								<v-col cols="2">
+									<v-text-field dense v-model="input4" label="Кг."></v-text-field>
+								</v-col>
+							</v-row>
+						</v-card>
+						<v-card 
+							v-if="btn_krp"
+							outlined
+							class="mt-2 mx-8"
+							
+							>
+							<div left class="overline ml-4 my-2">Греча</div>
+							<v-row align="center" justify="center" no-gutters>
+								<v-col cols="8">
+									Укажите количество упаковок гречки
+								</v-col>
+								<v-col cols="2" >
+									<v-text-field  dense v-model="input5" label="Упк."></v-text-field>
+								</v-col>												
+							</v-row>
+							<v-row align="center" justify="center" no-gutters>
+								<v-col cols="8">
+									Укажите количество упаковок риса
+								</v-col>
+								<v-col cols="2">
+									<v-text-field dense v-model="input6" label="Упк."></v-text-field>
+								</v-col>
+							</v-row>
+						</v-card>
+						<v-row v-if="btn_krp || btn_apl || btn_milk" class="mt-2" align="center" justify="center">						
+							<v-btn class="mx-1" @click="sendform()" :loading="loading" color="success">Отправить</v-btn>
+							<v-btn class="mx-1" @click="dialog = false" color="grey lighten-1">Отмена</v-btn>
+						</v-row>
+					</v-col>	
+				</v-card-text>
+					</v-card>
+					</v-dialog> 
+		</v-row>		
+	</v-app>
+</div>
+
+<script>
+	var app = new Vue({
+		el: '#items',
+		vuetify: new Vuetify(),
+		data: {
+			dialog: false,
+			type: '',
+			btn_apl: '',
+			btn_milk: '',
+			btn_krp: '',
+			input1: '',
+			input2: '',
+			input3: '',
+			input4: '',
+			input5: '',
+			input6: '',
+			inputRules: [
+				v => v != v || 'Заполните'
+			],
+			loading: false,
+			snackbar: false,
+			btn_text:'',
+			product: ['Молочная продукция', 'Гречневая крупа', 'Яблоки'],
+			btns: [
+				{
+					text: 'Молоко',
+					act: 'btn_milk',
+					color: 'grey darken-1',
+					icon: 'mdi-food-variant'
+				},
+				{
+					text: 'Яблоки',
+					act: 'btn_apl',
+					color: 'green darken-1',
+					icon: 'mdi-apple'
+				},
+				{
+					text: 'Гречневая крупа',
+					act: 'btn_krp',
+					color: 'grey darken-1',
+					icon: 'mdi-pasta'
+				}
+			]						
+		},
+
+		methods:{
+			//Вызова карточки выбранного продукта
+			show_card: function(prop){
+				if(prop == 'btn_apl'){
+					this.btn_apl = !this.btn_apl
+				} else if(prop == 'btn_milk'){
+					this.btn_milk = !this.btn_milk
+				} else if(prop == 'btn_krp'){
+					this.btn_krp = !this.btn_krp
+				}				
+			},
+			//Отправка формы через json
+			sendform: function(){
+				this.loading = true;				
+				console.log('sendform');
+				axios
+                .post('ajax.php',{
+    				input1: this.input1
+				})
+                .then(function (response) {
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});				
+				this.dialog = false;
+				this.loading = false;
+				this.snackbar = true;
+			}
+		}
+				
+	})
+    let sidebar = document.getElementById('sidebar');
+	let pl_store = document.getElementById('store');
+	let pl_sidebar = document.getElementById('pl_sidebar');
+	sidebar.insertBefore(pl_store, pl_sidebar)
+	
+</script>
