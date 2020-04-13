@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -6,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
 
 <style>
+	html { overflow:  hidden; }
     .theme--light.v-application {
     background: transparent;
     }
@@ -13,7 +16,7 @@
     color: green;
 }
 </style>
-
+<body>
 <div id="items" style="max-height: 1px;">
 	<v-app>		
 		<v-snackbar
@@ -41,28 +44,19 @@
 					<v-icon x-large color="green darken-1">store</v-icon> 
 				</v-btn>
 				</template> 
-				<span>Форма заказа продуктов</span>                       
+				<span>{{ pl_name }}</span>                       
 			</v-tooltip>
         </div>
-			<v-dialog
-				v-model="dialog"
-				max-width="590"
-				>
+			<v-dialog v-model="dialog"	max-width="590">
 				<v-card color="grey lighten-5">
 				<v-card-text class="pa-0">
 					
-					<p class="text-center pt-4 headline text--primary">
-						Форма заказа продуктов
-					</p>
-					<p class="text-center">
-						Для заказа выберите необходимые продукты 
-					</p>								
+					<p class="text-center pt-4 headline text--primary">{{ pl_name }}</p>
+					<p class="text-center">{{ pl_subtitle }}</p>								
 				
 					<v-col>
 						<v-row justify="center">
-								<v-btn-toggle										
-									multiple
-									>								
+								<v-btn-toggle multiple>								
 									<v-btn
 										v-for="(btn, index) in btns"
 										:key="btn.text"
@@ -72,11 +66,7 @@
 									</v-btn>
 							</v-btn-toggle>
 						</v-row>
-						<v-card 
-							v-if="btn_milk"
-							outlined
-							class="mt-2 mx-8"
-							>
+						<v-card v-if="btn_milk"	outlined class="mt-2 mx-8">
 							<div left class="overline ml-4 my-2">Молочная продукция</div>
 							<v-row align="center" justify="center" no-gutters>
 								<v-col cols="8">
@@ -95,11 +85,7 @@
 								</v-col>
 							</v-row>
 						</v-card>
-						<v-card 
-							v-if="btn_apl"
-							outlined
-							class="mt-2 mx-8"
-							>
+						<v-card v-if="btn_apl"	outlined class="mt-2 mx-8">
 							<div left class="overline ml-4 my-2">Яблоки</div>
 							<v-row align="center" justify="center" no-gutters>
 								<v-col  cols="8">
@@ -118,13 +104,8 @@
 								</v-col>
 							</v-row>
 						</v-card>
-						<v-card 
-							v-if="btn_krp"
-							outlined
-							class="mt-2 mx-8"
-							
-							>
-							<div left class="overline ml-4 my-2">Греча</div>
+						<v-card v-if="btn_krp"	outlined class="mt-2 mx-8">
+							<div left class="overline ml-4 my-2">Бакалея</div>
 							<v-row align="center" justify="center" no-gutters>
 								<v-col cols="8">
 									Укажите количество упаковок гречки
@@ -159,6 +140,8 @@
 		el: '#items',
 		vuetify: new Vuetify(),
 		data: {
+			pl_name:'Заказ продуктов',
+			pl_subtitle: 'Для заказа выберите необходимые продукты',
 			dialog: false,
 			type: '',
 			btn_apl: '',
@@ -170,13 +153,8 @@
 			input4: '',
 			input5: '',
 			input6: '',
-			inputRules: [
-				v => v != v || 'Заполните'
-			],
 			loading: false,
-			snackbar: false,
-			btn_text:'',
-			product: ['Молочная продукция', 'Гречневая крупа', 'Яблоки'],
+			snackbar: false,			
 			btns: [
 				{
 					text: 'Молоко',
@@ -191,7 +169,7 @@
 					icon: 'mdi-apple'
 				},
 				{
-					text: 'Гречневая крупа',
+					text: 'Бакалея',
 					act: 'btn_krp',
 					color: 'grey darken-1',
 					icon: 'mdi-pasta'
@@ -237,3 +215,6 @@
 	sidebar.insertBefore(pl_store, pl_sidebar)
 	
 </script>
+
+</body>
+</html>
