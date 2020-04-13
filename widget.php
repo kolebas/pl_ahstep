@@ -5,10 +5,7 @@ $path = $APPLICATION->GetCurUri();
 		if ($path == $etalon)
 		{	
 			?>											
-												
-
-
-
+	
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="/ahstep/style.css" rel="stylesheet">
 <style type="text/css">
@@ -18,7 +15,7 @@ $path = $APPLICATION->GetCurUri();
 </style>
 
 
-	<div id="sidebar">
+	<div id="pl_sidebar">
 		<?include_once('/home/bitrix/www/ahstep/slider/slider.php');?>
 		
 		<div class="sidebar-widget sidebar-widget-bp pl_widget">
