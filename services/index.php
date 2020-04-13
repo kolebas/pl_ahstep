@@ -1,20 +1,15 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Заявки");
-
 use Bitrix\Main\UI\Extension;
-
 Extension::load('ui.bootstrap4');
 ?>
 
+<link href="style.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<link href="style.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
 <nav aria-label="breadcrumb">
@@ -27,168 +22,32 @@ Extension::load('ui.bootstrap4');
 <div id="items" >
 	<v-app>
 		<v-content>
-			<v-snackbar
-			v-model="snackbar"
-			top
-			absolute
-			color="success"
-			>
-			Ваша заявка успешно отправлена
-				<v-btn
-					dark
-					text
-					@click="snackbar = false"
-				>
-					Закрыть
-				</v-btn>
-			</v-snackbar>
 			<v-row
-			justify="center"
-			>
-				<v-card
-				class="mx-8 blue-grey lighten-5"
-				max-width="750"
-				>
-					<v-card-text>
-						<div>
-							<p class="headline text--primary text-center">{{ title }}</p>
-							<p style="line-height: 1.5;">
-								{{ message }} <a href="../../../it-uslugi/helpdesk/my_ticket.php"><button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button></a>
-							</p>
-						</div>
-					</v-card-text>
-					<div v-for="(category, key) in categories">
-						<a :href="'#' + category.type"  role="button" data-toggle="collapse" :class="categoty_class"><img :src=category.img> <span class="pl_text">{{ category.name }}</span></a>
-						<div class="collapse" :id="category.type">
-							<div class="card card-body">
-								<card-item-list v-for="item in items" v-if="item.type == category.type" :item="item" ></card-item-list>
+				justify="center"
+					>
+					<v-card
+					class="mx-8 blue-grey lighten-5"
+					max-width="750"
+					>
+						<v-card-text>
+							<div>
+								<p class="headline text--primary text-center">{{ title }}</p>
+								<p style="line-height: 1.5;">
+									{{ message }} <a href="../../../it-uslugi/helpdesk/my_ticket.php"><button id="btn_ticket" type="button" class="ui-btn ui-btn-xs">Мои заявки</button></a>
+								</p>
+							</div>
+						</v-card-text>
+						<div v-for="(category, key) in categories">
+							<a :href="'#' + category.type"  role="button" data-toggle="collapse" :class="categoty_class"><img :src=category.img> <span class="pl_text">{{ category.name }}</span></a>
+							<div class="collapse" :id="category.type">
+								<div class="card card-body">
+									<card-item-list v-for="item in items" v-if="item.type == category.type" :item="item" ></card-item-list>
+								</div>
 							</div>
 						</div>
-					</div>
-				</v-card>
-				<v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-btn class="mr-12"fab v-on="on" @click="dialog = true"> 
-                      <v-icon x-large color="green darken-1">store</v-icon> 
-                    </v-btn>
-                  </template> 
-                  <span>Форма заказа продуктов</span>                       
-				</v-tooltip>
-				<v-dialog
-                    v-model="dialog"
-                    max-width="590"
-                    >
-					<v-card color="grey lighten-5">
-							<v-card-text class="pa-0">
-								<p class="text-center pt-4 headline text--primary">Форма заказа продуктов</p>
-								<p class="text-center">
-									Для заказа выберите необхудимые продукты 
-								</p>								
-                            
-							<v-col>
-								<v-row justify="center">
-										<v-btn-toggle
-											v-model="toggle_exclusive"
-											multiple
-											>								
-											<v-btn
-												@click="btn_milk = !btn_milk ">
-												<v-icon >mdi-format-align-center</v-icon>Молочная продукция
-											</v-btn>
-											<v-btn
-												@click="apl_btn = !apl_btn">
-												<v-icon color="green darken-1">mdi-apple</v-icon>Яблоки
-											</v-btn>
-											<v-btn
-												@click="btn_krp = !btn_krp">
-												<v-icon color="green darken-4">mdi-pasta</v-icon>Греча
-											</v-btn>
-									</v-btn-toggle>
-								</v-row>
-								<v-card 
-									v-if="btn_milk"
-									outlined
-									class="mt-2 mx-8"
-									>
-									<div left class="overline ml-4 my-2">Молочная продукция</div>
-									<v-row align="center" justify="center" no-gutters>
-										<v-col cols="8">
-											Укажите кефира
-										</v-col>
-										<v-col cols="2" >
-											<v-text-field  dense v-model="input1"></v-text-field>
-										</v-col>												
-									</v-row>
-									<v-row align="center" justify="center" no-gutters>
-										<v-col cols="8">
-											Укажите сыра
-										</v-col>
-										<v-col cols="2">
-											<v-text-field dense v-model="input1"></v-text-field>
-										</v-col>
-									</v-row>
-								</v-card>
-								<v-card 
-									v-if="apl_btn"
-									outlined
-									class="mt-2 mx-8"
-									>
-									<div left class="overline ml-4 my-2">Яблоки</div>
-									<v-row align="center" justify="center" no-gutters>
-										<v-col  cols="8">
-											Укажите количество красных яблок
-										</v-col>
-										<v-col cols="2" >
-											<v-text-field  dense v-model="label" label="Кг."></v-text-field>
-										</v-col>												
-									</v-row>
-									<v-row align="center" justify="center" no-gutters>
-										<v-col cols="8">
-											Укажите количество зеленых яблок
-										</v-col>
-										<v-col cols="2">
-											<v-text-field dense v-model="input1" label="Кг."></v-text-field>
-										</v-col>
-									</v-row>
-								</v-card>
-								<v-card 
-									v-if="btn_krp"
-									outlined
-									class="mt-2 mx-8"
-									
-									>
-									<div left class="overline ml-4 my-2">Крупы</div>
-									<v-row align="center" justify="center" no-gutters>
-										<v-col cols="8">
-											Укажите количество упаковок гречки
-										</v-col>
-										<v-col cols="2" >
-											<v-text-field  dense v-model="input1"></v-text-field>
-										</v-col>												
-									</v-row>
-									<v-row align="center" justify="center" no-gutters>
-										<v-col cols="8">
-											Укажите количество упаковок риса
-										</v-col>
-										<v-col cols="2">
-											<v-text-field dense v-model="input1"></v-text-field>
-										</v-col>
-									</v-row>
-								</v-card>
-								<v-row class="mt-2" align="center" justify="center">						
-									<v-btn class="mx-1" @click="sendform()" :loading="loading" color="success">Отправить</v-btn>
-									<v-btn class="mx-1" @click="dialog = false" color="grey lighten-1">Отмена</v-btn>
-								</v-row>
-							</v-card-text>								
-							
-															
-								
-							</v-col>
-						</v-card>
-                      </v-dialog> 
+					</v-card>				
 			</v-row>
-		</v-content>
-		
+		</v-content>		
 	</v-app>
 </div>
 
@@ -215,12 +74,8 @@ Extension::load('ui.bootstrap4');
 			message: 'Для получения доступа к сервису или услуге, выберите нужный раздел, а затем услугу, после заполнения необходимых полей формы заявка будет отправлена на согласование отвественных сотрудникам. Статус заявки вы можете отслеживать в разделе',
 			path_service: '../../it-uslugi/uslugi/',
 			dialog: false,
-			type: '',
-			toggle_exclusive: '',
-			input1: '',
-			loading: false,
-			snackbar: false,
-			product: ['Молочная продукция', 'Гречневая крупа', 'Яблоки'],
+			type: '',			
+			btn_text:'',
 			categories: [{
 					name: 'Нормативно-справочная информация',
 					img: 'img/list.png',
@@ -330,7 +185,7 @@ Extension::load('ui.bootstrap4');
 					type: 'mail',
 					lnk: '../../it-uslugi/uslugi/ml-001.php'
 				},
-			]			
+			],								
 		},
 		// Тестирование фильтрации
 		/*computed:{
@@ -340,26 +195,6 @@ Extension::load('ui.bootstrap4');
                 });
             }
 		},*/
-		methods:{
-			sendform: function(){
-				this.loading = true;				
-				console.log('sendform');
-				axios
-                .post('ajax.php',{
-    				input1: this.input1
-				})
-                .then(function (response) {
-					console.log(response);
-				})
-				.catch(function (error) {
-					console.log(error);
-				});				
-				this.dialog = false;
-				//this.loading = false;
-				this.snackbar = true;
-			}
-		}
-		
 		//Тестирование функций
 		/*methods:{
 			category_type: function (prop) {
